@@ -1,0 +1,129 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Montserrat', sans-serif;
+  color: #1a1a1a;
+  background-color: #fffaf0;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Playfair Display', serif;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f5f9;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #a8bba2;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #7a8a72;
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+/* Form Styles */
+input[type='text'],
+input[type='email'],
+input[type='tel'],
+input[type='date'],
+input[type='number'],
+textarea,
+select {
+  @apply transition-all duration-300;
+}
+
+input[type='text']:focus,
+input[type='email']:focus,
+input[type='tel']:focus,
+input[type='date']:focus,
+input[type='number']:focus,
+textarea:focus,
+select:focus {
+  @apply ring-2 ring-sage ring-opacity-50;
+}
+
+/* Button Styles */
+button {
+  @apply transition-all duration-300;
+}
+
+button:disabled {
+  @apply cursor-not-allowed opacity-50;
+}
+
+/* Card Styles */
+.card {
+  @apply bg-white rounded-xl shadow-lg border border-sage-light;
+}
+
+/* Utility Classes */
+.gradient-sage {
+  @apply bg-gradient-to-br from-sage to-sage-dark;
+}
+
+.text-gradient {
+  background: linear-gradient(135deg, #A8BBA2 0%, #D4AF37 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Responsive Typography */
+@media (max-width: 768px) {
+  h1 {
+    @apply text-3xl;
+  }
+
+  h2 {
+    @apply text-2xl;
+  }
+}
