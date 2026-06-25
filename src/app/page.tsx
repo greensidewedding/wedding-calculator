@@ -1,7 +1,6 @@
 'use client';
 
 import Hero from '@/components/Hero';
-import CalculatorSteps from '@/components/CalculatorSteps';
 
 export default function Home() {
   return (

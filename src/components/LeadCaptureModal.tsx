@@ -10,6 +10,7 @@ import { motion } from 'framer-motion';
 export default function LeadCaptureModal({ onClose }: { onClose: () => void }) {
   const { data } = useCalculatorStore();
   const [formData, setFormData] = useState({
+    whatsapp: '',
     instagram: '',
   });
   const [loading, setLoading] = useState(false);
@@ -26,8 +27,7 @@ export default function LeadCaptureModal({ onClose }: { onClose: () => void }) {
     setLoading(true);
 
     try {
-      // Extract WhatsApp number from form or use default
-      const whatsappNumber = (e.target as HTMLFormElement).whatsapp.value.replace(/\D/g, '');
+      const whatsappNumber = formData.whatsapp.replace(/\D/g, '');
       const fullNumber = whatsappNumber.startsWith('62') ? whatsappNumber : `62${whatsappNumber.slice(1)}`;
 
       const leadData = {
@@ -40,15 +40,12 @@ export default function LeadCaptureModal({ onClose }: { onClose: () => void }) {
         calculatorData: data,
       };
 
-      // Save to Supabase
       const result = await saveLead(leadData);
 
       if (result.success) {
         toast.success('Data berhasil dikirim!');
-
-        // Redirect to WhatsApp
         setTimeout(() => {
-          const message = `Halo Greenside Wedding Organizer, saya baru saja menggunakan Wedding Calculator dan ingin konsultasi mengenai pernikahan saya. Budget yang saya rencanakan adalah ${data?.total}. Mohon hubungi saya untuk informasi lebih lanjut.`;
+          const message = `Halo Greenside Wedding Organizer, saya baru saja menggunakan Wedding Calculator dan ingin konsultasi mengenai pernikahan saya. Budget yang saya rencanakan adalah Rp ${(data?.total || 0).toLocaleString('id-ID')}. Mohon hubungi saya untuk informasi lebih lanjut. Terima kasih!`;
           redirectToWhatsApp(fullNumber, message);
           onClose();
         }, 1000);
@@ -82,9 +79,9 @@ export default function LeadCaptureModal({ onClose }: { onClose: () => void }) {
         >
           <button
             onClick={onClose}
-            className="absolute top-4 right-4 text-gray-400 hover:text-gray-600"
+            className="absolute top-4 right-4 text-gray-400 hover:text-gray-600 text-2xl"
           >
-            ✕
+            ×
           </button>
 
           <h2 className="font-serif text-2xl font-bold text-sage-dark mb-2">Dapatkan Hasil Lengkap</h2>
@@ -99,6 +96,8 @@ export default function LeadCaptureModal({ onClose }: { onClose: () => void }) {
                 name="whatsapp"
                 required
                 placeholder="08xxxxxxxxxx atau 62xxxxxxxxxx"
+                value={formData.whatsapp}
+                onChange={handleChange}
                 className="w-full px-4 py-2 border-2 border-sage-light rounded-lg focus:outline-none focus:border-sage transition-colors"
               />
             </div>
@@ -127,7 +126,7 @@ export default function LeadCaptureModal({ onClose }: { onClose: () => void }) {
               disabled={loading}
               className="w-full bg-sage hover:bg-sage-dark text-white font-bold py-3 rounded-lg transition-all duration-300 disabled:opacity-50"
             >
-              {loading ? 'Mengirim...' : '📲 Dapatkan Hasil Lengkap'}
+              {loading ? 'Mengirim...' : '📱 Dapatkan Hasil Lengkap'}
             </button>
           </form>
         </motion.div>
